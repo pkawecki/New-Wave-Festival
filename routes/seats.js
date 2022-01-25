@@ -4,7 +4,7 @@ const randomID = require("@przemo41/randomid-generator");
 
 //Import and declare array as database
 const database = require("../db");
-let db = [...database.seats];
+const db = [...database.seats];
 
 //Reset db function
 const reloadDb = () => {
@@ -30,6 +30,14 @@ router
     const { day, seat, client, email } = req.body;
     console.log("Post");
     if (day && seat && client && email) {
+      db.some((element) => {
+        console.log("foreach entered");
+        if (element.seat == seat && element.day == day) {
+          res.status(404).json({ msg: "seat is taken on the day" });
+          console.log("taken");
+        }
+        return res.statusCode == 404;
+      });
       db.push({
         id: randomID(5),
         day,
@@ -37,10 +45,10 @@ router
         client,
         email,
       });
+      if (res.statusCode !== 404) res.send([...db]);
     } else {
-      res.json({ msg: "some params missing" });
+      res.status(404).json({ msg: "some params missing" });
     }
-    res.json(db);
   });
 
 // "/:id Endpoint"
