@@ -19,15 +19,11 @@ router.route("/reload").get((req, res) => {
   res.json(db);
 });
 
-//GET endpoints
-router.route("/").get((req, res) => {
-  res.json(db);
-});
-
 // "/" Endpoint
 router
   .route("/")
   .get((req, res) => {
+    console.log("Get all seats");
     res.json(db);
   })
   .post((req, res) => {
