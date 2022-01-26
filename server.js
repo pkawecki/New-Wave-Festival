@@ -3,6 +3,7 @@ const app = express();
 var cors = require("cors");
 const randomID = require("@przemo41/randomid-generator");
 const { message } = require("statuses");
+const path = require("path");
 
 //Import routes
 const testimonials = require("./routes/testimonials");
@@ -18,6 +19,13 @@ app.use("/testimonials", testimonials);
 app.use("/concerts", concerts);
 app.use("/seats", seats);
 
+// Serve static files from the React app
+app.use(express.static(path.join(__dirname, "/client/build")));
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "/client/build/index.html"));
+});
+
 // //GET for database reset
 // app.get("/reload", (req, res) => {
 //   console.log("Reloaded");
@@ -32,4 +40,6 @@ app.use((req, res, next) => {
 });
 
 //RUN server
-app.listen(8000);
+app.listen(process.env.PORT || 8000, () => {
+  console.log("Server is running on port: 8000");
+});

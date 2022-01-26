@@ -1,5 +1,6 @@
 {
   "name": "express_2",
+  "homepage": ".",
   "version": "1.0.0",
   "description": "express server",
   "main": "server.js",
