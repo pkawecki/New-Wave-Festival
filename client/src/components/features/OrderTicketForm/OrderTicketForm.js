@@ -73,14 +73,14 @@ class OrderTicketForm extends React.Component {
   componentDidMount() {
     console.log("component did mount");
     const { loadSeats } = this.props;
-    this.interval = setInterval(() => {
-      console.log("5s");
-      loadSeats();
-    }, 120000);
+    // this.interval = setInterval(() => {
+    //   console.log("5s");
+    //   loadSeats();
+    // }, 120000);
   }
 
   componentWillUnmount() {
-    clearInterval(this.interval);
+    // clearInterval(this.interval);
   }
 
   render() {

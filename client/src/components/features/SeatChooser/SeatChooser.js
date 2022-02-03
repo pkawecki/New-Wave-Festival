@@ -14,7 +14,7 @@ class SeatChooser extends React.Component {
     //Socket runstart
     const socket = io(API_URL);
     socket.on("seatsUpdated", (seats) => {
-      console.log("seatsUpdated received with data: ", seats);
+      // console.log("seatsUpdated received with data: ", seats);
       loadSeatsData(seats);
 
       //UPDATE reserved seats
@@ -23,7 +23,14 @@ class SeatChooser extends React.Component {
     });
   }
 
-  // const takenSeatsInDays = (seats)
+  freeSeatsInDays = () => {
+    const { seats, chosenDay } = this.props;
+    let filteredLength = seats.filter((x) => x.day == chosenDay).length;
+    // console.log({ seats, chosenDay });
+    // console.log("filtered", filteredLength);
+    this.filteredLength = filteredLength;
+    return true;
+  };
 
   isTaken = (seatId) => {
     const { seats, chosenDay } = this.props;
@@ -62,7 +69,7 @@ class SeatChooser extends React.Component {
   };
 
   render() {
-    const { prepareSeat } = this;
+    const { prepareSeat, freeSeatsInDays: takenSeatsInDays } = this;
     const { requests } = this.props;
 
     return (
@@ -74,18 +81,22 @@ class SeatChooser extends React.Component {
         <small id="pickHelpTwo" className="form-text text-muted ml-2 mb-4">
           <Button outline color="primary" /> – it's empty
         </small>
-        {requests["LOAD_SEATS"] && requests["LOAD_SEATS"].success && (
-          <div className="seats">
-            {[...Array(50)].map((x, i) => prepareSeat(i + 1))}
-          </div>
-        )}
+        {requests["LOAD_SEATS"] &&
+          requests["LOAD_SEATS"].success &&
+          takenSeatsInDays() && (
+            <div className="seats">
+              {[...Array(50)].map((x, i) => prepareSeat(i + 1))}
+            </div>
+          )}
         {requests["LOAD_SEATS"] && requests["LOAD_SEATS"].pending && (
           <Progress animated color="primary" value={50} />
         )}
         {requests["LOAD_SEATS"] && requests["LOAD_SEATS"].error && (
           <Alert color="warning">Couldn't load seats...</Alert>
         )}
-        <div style={{ textAlign: "end" }}>{}Free seats: 2/15</div>
+        <div style={{ textAlign: "end" }}>
+          Free seats: {50 - this.filteredLength}/15
+        </div>
       </div>
     );
   }
