@@ -16,11 +16,26 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cors());
 
-//Apply midldeware to be used on endpotins
-// app.use((req, res, next) => {
-//   req.io = io;
-//   next();
-// });
+//RUN server
+const server = app.listen(process.env.PORT || 8000, () => {
+  console.log("Server is running on port: 8000");
+  console.log(API_URL);
+});
+
+//Socket
+const io = require("socket.io")(server, {
+  cors: { origin: "http://localhost:3000", methods: ["*"] },
+});
+
+io.on("connection", (client) => {
+  console.log("client connected");
+});
+
+// Apply midldeware to be used on endpotins
+app.use((req, res, next) => {
+  req.io = io;
+  next();
+});
 
 //Use endpoints from external files
 app.use("/testimonials", testimonials);
@@ -45,19 +60,4 @@ app.get("*", (req, res) => {
 app.use((req, res, next) => {
   let msg = { message: "Not found" };
   res.status(404).json(msg);
-});
-
-//RUN server
-const server = app.listen(process.env.PORT || 8000, () => {
-  console.log("Server is running on port: 8000");
-  console.log(API_URL);
-});
-
-//Socket
-const io = require("socket.io")(server, {
-  cors: { origin: "http://localhost:3000", methods: ["*"] },
-});
-
-io.on("connection", (client) => {
-  console.log("client connected");
 });

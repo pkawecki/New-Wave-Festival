@@ -50,7 +50,7 @@ router
       res.status(404).json({ msg: "some params missing" });
     }
     // console.log(day, seat, client, email);
-    // req.io.emit("someevent", { day, seat, client, email });
+    req.io.emit("seatsUpdated", db);
   });
 
 // "/:id Endpoint"

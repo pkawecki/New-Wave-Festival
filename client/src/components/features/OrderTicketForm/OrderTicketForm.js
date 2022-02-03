@@ -44,6 +44,7 @@ class OrderTicketForm extends React.Component {
     const { value, name } = target;
 
     this.setState({ order: { ...order, [name]: parseInt(value) } });
+    console.log(this.state);
   };
 
   submitForm = async (e) => {
