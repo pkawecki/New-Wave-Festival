@@ -31,7 +31,6 @@ router
     console.log("Post");
     if (day && seat && client && email) {
       db.some((element) => {
-        console.log("foreach entered");
         if (element.seat == seat && element.day == day) {
           res.status(404).json({ msg: "seat is taken on the day" });
           console.log("taken");

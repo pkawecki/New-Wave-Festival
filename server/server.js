@@ -17,9 +17,9 @@ app.use(express.json());
 app.use(cors());
 
 //RUN server
-const server = app.listen(process.env.PORT || 8000, () => {
-  console.log("Server is running on port: 8000");
-  console.log(API_URL);
+const PORT = process.env.PORT;
+const server = app.listen(PORT || 8000, () => {
+  console.log("Server is running on port:", PORT || 8000);
 });
 
 //Socket
@@ -43,10 +43,10 @@ app.use("/concerts", concerts);
 app.use("/seats", seats);
 
 // Serve static files from the React app
-app.use(express.static(path.join(__dirname, "/client/build")));
+app.use(express.static(path.join(__dirname, "../client/build")));
 
 app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "/client/build/index.html"));
+  res.sendFile(path.join(__dirname, "../client/build/index.html"));
 });
 
 // //GET for database reset
