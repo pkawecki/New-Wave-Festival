@@ -4,7 +4,8 @@
   "description": "Heroku app:\r https://pkawecki-express-2.herokuapp.com/order-a-ticket",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha \"server/**/concerts.test.js \" ",
+    "test:watch": "onchange \"./**/*.js\" -i -k -- npm run test",
     "start": "cd server && node server.js",
     "build": "cd server && npm install && cd ../client && npm install && npm run build"
   },
@@ -18,5 +19,11 @@
   "bugs": {
     "url": "https://github.com/pkawecki/express_2/issues"
   },
-  "homepage": "https://github.com/pkawecki/express_2#readme"
+  "homepage": "https://github.com/pkawecki/express_2#readme",
+  "dependencies": {
+    "chai": "^4.3.6",
+    "chai-http": "^4.3.0",
+    "mocha": "^9.2.0",
+    "onchange": "^7.1.0"
+  }
 }

@@ -61,3 +61,5 @@ app.use((req, res, next) => {
   let msg = { message: "Not found" };
   res.status(404).json(msg);
 });
+
+module.exports = server;
