@@ -1,39 +1,44 @@
 const express = require("express");
 const router = express.Router();
 const randomID = require("@przemo41/randomid-generator");
+const { Concert } = require("../models/universal.models");
+const mongoose = require("mongoose");
 
 //Import and declare array as database
-const database = require("../db");
-let db = [...database.concerts];
+// const database = require("../db");
+// let db = [...database.concerts];
 
 //Reset db function
-const reloadDb = () => {
-  db = [];
-  db = [...database.concerts];
-};
+// const reloadDb = () => {
+//   db = [];
+//   db = [...database.concerts];
+// };
 
 // "/" Endpoint
 router
   .route("/")
-  .get((req, res) => {
-    res.json(db);
-  })
-  .post((req, res) => {
-    const { performer, genre, price, day, image } = req.body;
-    console.log("Post");
-    if (performer && genre && price && day && image) {
-      db.push({
-        id: randomID(5),
-        performer,
-        genre,
-        price,
-        day,
-        image,
-      });
-    } else {
-      res.json({ msg: "some params missing" });
+  .get(async (req, res) => {
+    try {
+      const allConcerts = await Concert.find();
+      if (!allConcerts.length)
+        res.status(404).json({ message: "Not found any concert in DB" });
+      else res.json(allConcerts);
+    } catch (err) {
+      console.log(err);
+      res.status(500).json({ message: err });
     }
-    res.json(db);
+  })
+  .post(async (req, res) => {
+    try {
+      const { performer, genre, price, day, image } = req.body;
+      const concert = new Concert({ performer, genre, price, day, image });
+      await concert.save();
+      res.json({ message: "OK" });
+      console.log("Post");
+    } catch (err) {
+      console.log(err);
+      res.status(500).json({ message: err });
+    }
   });
 
 // "/:id Endpoint"
