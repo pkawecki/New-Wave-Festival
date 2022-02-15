@@ -18,9 +18,9 @@ app.use((req, res, next) => {
 });
 
 //ROUTING
-const testimonials = require("./routes/testimonials");
-const concerts = require("./routes/concerts");
-const seats = require("./routes/seats");
+const testimonials = require("./routes/testimonial/testimonials.routes");
+const concerts = require("./routes/concert/concerts.routes");
+const seats = require("./routes/seat/seats.routes");
 const API_URL = require("./config");
 
 app.use("/testimonials", testimonials);
