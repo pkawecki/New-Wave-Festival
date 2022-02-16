@@ -4,7 +4,7 @@
   "description": "Heroku app:\r https://pkawecki-express-2.herokuapp.com/order-a-ticket",
   "main": "index.js",
   "scripts": {
-    "test": "mocha \"server/**/concerts.test.js \" ",
+    "test": "mocha \"server/**/concerts.crud.test.js \" ",
     "test:watch": "onchange \"./**/*.js\" -i -k -- npm run test",
     "start": "cd server && node server.js",
     "build": "cd server && npm install && cd ../client && npm install && npm run build"

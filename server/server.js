@@ -30,8 +30,7 @@ const NODE_ENV = process.env.NODE_ENV;
 let dbUri = "";
 
 if (NODE_ENV === "production")
-  dbUri =
-    "mongodb+srv://przemo41:maslo123@cluster1.oavbq.mongodb.net/Cluster1?retryWrites=true";
+  dbUri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster1.oavbq.mongodb.net/Cluster1?retryWrites=true`;
 else if (NODE_ENV === "test") dbUri = "mongodb://localhost:27017/NewWaveDB";
 else dbUri = "mongodb://localhost:27017/NewWaveDB";
 
