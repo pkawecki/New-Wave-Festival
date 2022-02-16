@@ -1,4 +1,4 @@
-import React, { useLayoutEffect } from "react";
+import React from "react";
 import { Button, Progress, Alert } from "reactstrap";
 import { io } from "socket.io-client";
 import { API_URL } from "../../../config";
@@ -25,7 +25,7 @@ class SeatChooser extends React.Component {
 
   freeSeatsInDays = () => {
     const { seats, chosenDay } = this.props;
-    let filteredLength = seats.filter((x) => x.day == chosenDay).length;
+    let filteredLength = seats.filter((x) => x.day === chosenDay).length;
     // console.log({ seats, chosenDay });
     // console.log("filtered", filteredLength);
     this.filteredLength = filteredLength;
@@ -34,27 +34,32 @@ class SeatChooser extends React.Component {
 
   isTaken = (seatId) => {
     const { seats, chosenDay } = this.props;
-
-    return seats.some((item) => item.seat === seatId && item.day === chosenDay);
+    const value = seats.some(
+      (item) => item.seat == seatId && item.day == chosenDay
+    );
+    return value;
   };
 
   prepareSeat = (seatId) => {
     const { chosenSeat, updateSeat } = this.props;
     const { isTaken } = this;
 
-    if (seatId === chosenSeat)
+    if (seatId === chosenSeat) {
+      console.log(seatId, "isChosen");
       return (
         <Button key={seatId} className="seats__seat" color="primary">
           {seatId}
         </Button>
       );
-    else if (isTaken(seatId))
+    } else if (isTaken(seatId)) {
+      console.log(seatId, "isTaken");
       return (
         <Button key={seatId} className="seats__seat" disabled color="secondary">
           {seatId}
         </Button>
       );
-    else
+    } else {
+      // console.log(seatId, "is Free");
       return (
         <Button
           key={seatId}
@@ -66,6 +71,7 @@ class SeatChooser extends React.Component {
           {seatId}
         </Button>
       );
+    }
   };
 
   render() {
@@ -85,6 +91,7 @@ class SeatChooser extends React.Component {
           requests["LOAD_SEATS"].success &&
           takenSeatsInDays() && (
             <div className="seats">
+              {console.log("mapping")}
               {[...Array(50)].map((x, i) => prepareSeat(i + 1))}
             </div>
           )}
@@ -95,7 +102,7 @@ class SeatChooser extends React.Component {
           <Alert color="warning">Couldn't load seats...</Alert>
         )}
         <div style={{ textAlign: "end" }}>
-          Free seats: {50 - this.filteredLength}/15
+          Free seats: {50 - this.filteredLength}/50
         </div>
       </div>
     );
