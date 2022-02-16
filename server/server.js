@@ -1,8 +1,6 @@
 const express = require("express");
 const app = express();
 var cors = require("cors");
-const randomID = require("@przemo41/randomid-generator");
-const { message } = require("statuses");
 const path = require("path");
 const mongoose = require("mongoose");
 
@@ -36,7 +34,6 @@ if (NODE_ENV === "production")
     "mongodb+srv://przemo41:maslo123@cluster1.oavbq.mongodb.net/Cluster1?retryWrites=true";
 else if (NODE_ENV === "test") dbUri = "mongodb://localhost:27017/NewWaveDB";
 else dbUri = "mongodb://localhost:27017/NewWaveDB";
-// else dbUri = "mongodb://localhost:27017/local";
 
 mongoose.connect(dbUri, {
   useNewUrlParser: true,
@@ -46,7 +43,12 @@ const db = mongoose.connection;
 
 // DATABSE CONNECTION LISTENERS
 db.once("open", () => {
-  console.log("Connceted to database");
+  console.log(
+    "Connceted to database: ",
+    dbUri,
+    "\n mode:",
+    process.env.NODE_ENV
+  );
 });
 db.on("error", (err) => console.log("Error: ", err));
 

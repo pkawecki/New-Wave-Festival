@@ -21,6 +21,11 @@
   },
   "homepage": "https://github.com/pkawecki/express_2#readme",
   "dependencies": {
+    "chai": "^4.3.6",
+    "chai-http": "^4.3.0",
     "onchange": "^7.1.0"
+  },
+  "devDependencies": {
+    "mocha": "^9.2.0"
   }
 }

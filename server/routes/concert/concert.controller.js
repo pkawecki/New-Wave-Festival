@@ -93,7 +93,7 @@ exports.findConcertsByParam = async (req, res) => {
       [key]: isDigRegTest ? value : { $regex: new RegExp(value, "i") },
     });
     if (foundConc.length) res.json(foundConc);
-    else res.json({ message: `Not concerts found by ${key}` }).status(404);
+    else res.status(404).json({ message: `Not concerts found by ${key}` });
   } catch (err) {
     console.log(err);
     res.json({ message: err });

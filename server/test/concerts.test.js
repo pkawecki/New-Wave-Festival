@@ -1,6 +1,5 @@
 const chaiHttp = require("chai-http");
 const chai = require("chai");
-
 const server = require("../server");
 
 chai.use(chaiHttp);
@@ -21,7 +20,7 @@ describe("GET concerts/", () => {
       }
     });
 
-    it("should return array of given performer concerts with incorrect input data", async () => {
+    it("should not return array of given performer concerts with incorrect input data", async () => {
       const performerLastName = "Haleyy"; //INCORRECT LAST NAME
       const perfName = performerFirstName + "%20" + performerLastName;
       const res = await request(server).get(`/concerts/performer/${perfName}`);
@@ -33,7 +32,7 @@ describe("GET concerts/", () => {
     const request = chai.request;
 
     it("should return array of given genre concerts with proper data input", async () => {
-      const genre = "Rock";
+      const genre = "Pop";
       const res = await request(server).get(`/concerts/genre/${genre}`);
       const body = res.body;
       expect(body).to.be.an("array");
@@ -44,16 +43,16 @@ describe("GET concerts/", () => {
       const genre = "Rockk";
       const res = await request(server).get(`/concerts/genre/${genre}`);
       const body = res.body;
-      expect(body.message).to.be.equal("not found");
+      expect(res.status).to.be.equal(404);
+      expect(body.message).to.be.equal("Not concerts found by genre");
     });
   });
-
   describe("/price/:price_min/:price_max", () => {
     const expect = chai.expect;
     const request = chai.request;
     it("should return an array of concerts within a given range of prices", async () => {
-      const priceMin = 25;
-      const priceMax = 25;
+      const priceMin = 10;
+      const priceMax = 40;
       const res = await request(server).get(
         `/concerts/price/${priceMin}/${priceMax}`
       );
