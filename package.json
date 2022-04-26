@@ -6,7 +6,7 @@
   "scripts": {
     "test": "mocha \"server/**/concerts.crud.test.js \" ",
     "test:watch": "onchange \"./**/*.js\" -i -k -- npm run test",
-    "start": "cd server && node server.js",
+    "start": "cd server && npm start",
     "build": "cd server && npm install && cd ../client && npm install && npm run build"
   },
   "repository": {

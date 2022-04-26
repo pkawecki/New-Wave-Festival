@@ -69,7 +69,9 @@ const io = require("socket.io")(server, {
 });
 
 io.on("connection", (client) => {
-  console.log("client connected");
+  const socketId = client.id;
+  const clientIp = client.request.connection.remoteAddress;
+  console.log(`client connected. IP:  ${clientIp}, socketId: ${socketId}`);
 });
 
 // APPLY SOCKET  MIDLDEWARE TO BE USED ON ENDPOTINS
