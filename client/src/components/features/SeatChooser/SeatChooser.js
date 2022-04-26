@@ -45,14 +45,12 @@ class SeatChooser extends React.Component {
     const { isTaken } = this;
 
     if (seatId === chosenSeat) {
-      console.log(seatId, "isChosen");
       return (
         <Button key={seatId} className="seats__seat" color="primary">
           {seatId}
         </Button>
       );
     } else if (isTaken(seatId)) {
-      console.log(seatId, "isTaken");
       return (
         <Button key={seatId} className="seats__seat" disabled color="secondary">
           {seatId}

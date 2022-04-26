@@ -3,10 +3,12 @@ const app = express();
 var cors = require("cors");
 const path = require("path");
 const mongoose = require("mongoose");
+const helmet = require("helmet");
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cors());
+app.use(helmet());
 
 //DATABASE PASS TO REQUEST
 
