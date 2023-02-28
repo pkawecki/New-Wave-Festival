@@ -1,6 +1,9 @@
 {
   "name": "express_2",
   "version": "1.0.0",
+  "engines": {
+    "node": "16.x"
+  },
   "description": "Heroku app:\r https://pkawecki-express-2.herokuapp.com/order-a-ticket",
   "main": "index.js",
   "scripts": {

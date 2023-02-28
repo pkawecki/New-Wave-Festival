@@ -2,6 +2,9 @@
   "name": "express_2",
   "homepage": ".",
   "version": "1.0.0",
+  "engines": {
+    "node": "16.x"
+  },
   "description": "express server",
   "main": "server.js",
   "scripts": {
