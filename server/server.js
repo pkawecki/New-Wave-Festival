@@ -4,6 +4,8 @@ var cors = require("cors");
 const path = require("path");
 const mongoose = require("mongoose");
 const helmet = require("helmet");
+require('dotenv').config();
+
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
@@ -33,12 +35,20 @@ app.use("/seats", seats);
 
 // MONGOOSE DATABASE CONNECTION CONFIG
 const NODE_ENV = process.env.NODE_ENV;
+const {DB_USER, DB_PASS} = process.env;
+console.log(DB_USER, DB_PASS);
 let dbUri = "";
 
 if (NODE_ENV === "production")
-  dbUri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster1.oavbq.mongodb.net/Cluster1?retryWrites=true`;
+  dbUri = `mongodb+srv://${DB_USER}:${DB_PASS}@Cluster1.oavbq.mongodb.net/Cluster1?retryWrites=true&w=majority`;
 else if (NODE_ENV === "test") dbUri = "mongodb://localhost:27017/NewWaveDB";
 else dbUri = "mongodb://localhost:27017/NewWaveDB";
+
+console.log(dbUri);
+// let esc = querystring.escape(process.env.DB_PASS);
+
+// if (NODE_ENV === "production")
+//   dbUri = `mongodb+srv://przemek:maselko123456@Cluster1.oavbq.mongodb.net/Cluster1?retryWrites=true&w=majority`;
 
 mongoose.connect(dbUri, {
   useNewUrlParser: true,
